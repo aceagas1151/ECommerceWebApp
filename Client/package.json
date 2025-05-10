@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
-  "dependencies": { 
+  "dependencies": {
     "react": "^19.2.0-canary-38ef6550-20250508",
     "react-dom": "^19.2.0-canary-38ef6550-20250508"
   },
@@ -24,6 +24,7 @@
     "globals": "^16.0.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vite-plugin-mkcert": "^1.17.8"
   }
 }
