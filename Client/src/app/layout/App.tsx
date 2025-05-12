@@ -6,7 +6,7 @@ import NavBar from "./NavBar";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([])
-  const darkMode = false;
+  const [darkMode, setDarkMode] = useState(false);
   const palleteType = darkMode ? 'dark' : 'light'
   
   
@@ -19,6 +19,10 @@ function App() {
     }
   })
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  }
+
   useEffect(() => {
     fetch('https://localhost:5001/api/products')
       .then(response => response.json())
@@ -29,15 +33,16 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <NavBar />
+      <NavBar toggleDarkMode={toggleDarkMode} darkMode= {darkMode} />
         <Box
           sx={{
             minHeight: '100vh',
-            background: darkMode ? '#121212' : '#eaeaea',
+            background: darkMode ? 'radial-gradient(circle at top left, #121212, #1e1e2f, #2d2d44)' : 'radial-gradient(circle at top left, #dbeafe, #ffffff)' ,
+            py: 6,
             display: 'flex',
             flexDirection: 'column'
           }}>
-          <Container maxWidth='xl' sx={{mt: 14}}>
+          <Container maxWidth='xl' sx={{mt: 8}}>
             <Catalog products={products} addProduct={function (): void {
              throw new Error("Function not implemented.");
           } }/>   

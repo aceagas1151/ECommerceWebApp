@@ -4,10 +4,11 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Typography
+  Typography,
+  useTheme
 } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import type { Product } from "../../app/models/product";
 
 type Props = {
@@ -15,25 +16,32 @@ type Props = {
 };
 
 export default function ProductCard({ product }: Props) {
+  const theme = useTheme();
+
   return (
     <Card
-      elevation={4}
+      elevation={0}
       sx={{
         width: 280,
-        borderRadius: 3,
+        borderRadius: 2,
+        backgroundColor: theme.palette.background.paper,
+        border: `1px solid ${theme.palette.divider}`,
         display: "flex",
         flexDirection: "column",
-        transition: "transform 0.2s ease-in-out",
+        transition: "transform 0.2s ease-in-out, box-shadow 0.2s",
         "&:hover": {
-          transform: "scale(1.02)"
-        }
+          transform: "scale(1.01)",
+          boxShadow: theme.shadows[3],
+        },
       }}
     >
       <CardMedia
+        component="img"
         sx={{
           height: 240,
-          backgroundSize: 'cover',
-          backgroundColor: "#f5f5f5"
+          objectFit: "contain",
+          backgroundColor: "#f1f3f4", // light Google-gray
+          p: 1.5,
         }}
         image={product.pictureUrl}
         title={product.name}
@@ -42,7 +50,7 @@ export default function ProductCard({ product }: Props) {
         <Typography
           gutterBottom
           variant="subtitle1"
-          fontWeight="bold"
+          fontWeight={600}
           color="text.primary"
         >
           {product.name}
@@ -50,7 +58,7 @@ export default function ProductCard({ product }: Props) {
         <Typography
           variant="h6"
           fontWeight="bold"
-          color="secondary"
+          color="text.secondary"
         >
           ₱{product.price.toFixed(2)}
         </Typography>
@@ -60,70 +68,33 @@ export default function ProductCard({ product }: Props) {
           variant="contained"
           size="small"
           startIcon={<ShoppingCartIcon />}
+          color="gray" // from your theme
+          sx={{
+            textTransform: "none",
+            fontWeight: 500,
+            px: 2,
+            py: 0.5,
+            fontSize: '0.8rem',
+          }}
         >
           Add to Cart
         </Button>
         <Button
-          variant="outlined"
-          size="small"
-          endIcon={<VisibilityIcon />}
-        >
-          View
+            variant="contained"
+            size="small"
+            color="gray"
+            endIcon={<VisibilityIcon />}
+            sx={{
+                textTransform: "none",
+                fontWeight: 500,
+                px: 2,
+                py: 0.5,
+                fontSize: '0.8rem',
+            }}
+            >
+            View
         </Button>
       </CardActions>
     </Card>
   );
 }
-
-
-
-
-
-// import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material"
-// import type { Product } from "../../app/models/product"
-
-// type Props = {
-//   product: Product
-// }
-
-// export default function ProductCard({product}: Props) {
-//   return (
-//     <Card 
-//         elevation={3}  
-//         sx={{
-//             width: 280,
-//             borderRadius: 2,
-//             display: 'flex',
-//             flexDirection: 'column',
-//             justifyContent: 'space-between'
-//         }}
-//     >
-       
-//         <CardMedia 
-//             sx={{height: 240, backgroudSize: 'cover'}}
-//             image={product.pictureUrl}
-//             title={product.name}
-//         />
-//         <CardContent>
-//             <Typography 
-//                 gutterBottom 
-//                 sx={{color: 'secondary.main'}}
-//                 variant="subtitle2">
-//                     {product.name}
-//             </Typography>
-//             <Typography
-//                 variant="h6"
-//                 sx={{color: 'secondary.main'}}
-//             >
-//                 ₱{(product.price).toFixed(2)}
-//             </Typography>
-//         </CardContent>
-//         <CardActions
-//             sx={{justifyContent: 'space-between'}}       
-//         >
-//             <Button>Add to Cart</Button>
-//             <Button>View</Button>
-//         </CardActions>
-//     </Card>
-//   )
-// }
