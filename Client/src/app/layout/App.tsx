@@ -1,9 +1,23 @@
 import { useEffect, useState } from "react"
 import type { Product } from "../models/product";
 import Catalog from "../../features/catalog/Catalog";
+import { Box, Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import NavBar from "./NavBar";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([])
+  const darkMode = false;
+  const palleteType = darkMode ? 'dark' : 'light'
+  
+  
+  const theme = createTheme({
+    palette: {
+      mode: palleteType,
+      background: {
+        default: (palleteType === 'light') ? '#121212' : '#eaeaea'
+      }
+    }
+  })
 
   useEffect(() => {
     fetch('https://localhost:5001/api/products')
@@ -11,26 +25,26 @@ function App() {
       .then(data => setProducts(data))
   }, [])
 
-  const addProduct = () => {
-    setProducts(prevState => [...prevState, 
-    {
-      id: prevState.length + 1,
-      name: 'product' + (prevState.length + 1), 
-      price: (prevState.length * 100) + 100,
-      quantityInStock: 100,
-      description: 'test',
-      pictureUrl: 'https://picsum.photo/200',
-      type: 'test',
-      brand: 'test'
-    }])
-  }
 
   return (
-  <div>
-    <h1>A.C. Goods</h1>
-    <Catalog products={products} addProduct={addProduct}/>
-    
-  </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <NavBar />
+        <Box
+          sx={{
+            minHeight: '100vh',
+            background: darkMode ? '#121212' : '#eaeaea',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+          <Container maxWidth='xl' sx={{mt: 14}}>
+            <Catalog products={products} addProduct={function (): void {
+             throw new Error("Function not implemented.");
+          } }/>   
+          </Container>
+      </Box>
+
+    </ThemeProvider>
   )
 }
 
