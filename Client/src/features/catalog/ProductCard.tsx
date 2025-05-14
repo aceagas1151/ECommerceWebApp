@@ -10,6 +10,7 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import type { Product } from "../../app/models/product";
+import { Link } from "react-router-dom";
 
 type Props = {
   product: Product;
@@ -80,6 +81,7 @@ export default function ProductCard({ product }: Props) {
           Add to Cart
         </Button>
         <Button
+            component={Link} to = {`/product/${product.id}`}
             variant="contained"
             size="small"
             color="gray"
